@@ -14,6 +14,7 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
 app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
@@ -29,5 +30,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    db = SQLAlchemy(app)
     app.run(host='127.0.0.1', port=8000, debug=True)
