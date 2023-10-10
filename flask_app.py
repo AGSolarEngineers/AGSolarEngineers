@@ -1,23 +1,23 @@
 import math
 from flask import Flask, redirect, render_template, request, url_for
 from git.repo import Repo
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from api import api
 from controller.power_plant import PowerPlant
 from model.estrutura import Estrutura
 from model.tables import Mesa
 app = Flask(__name__)
 
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
-    username="AGSolarEngineers",
-    password="AGSolar2023DB",
-    hostname="AGSolarEngineers.mysql.pythonanywhere-services.com",
-    databasename="AGSolarEngineers$projects",
-)
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
+# SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+#     username="AGSolarEngineers",
+#     password="AGSolar2023DB",
+#     hostname="AGSolarEngineers.mysql.pythonanywhere-services.com",
+#     databasename="AGSolarEngineers$projects",
+# )
+# app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+# app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# db = SQLAlchemy(app)
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
@@ -67,6 +67,7 @@ def comercial_estrutura():
     default_module_amount = 300
     default_module_power = 540
     default_power_plant_total = 103.68
+    power_plant_real = default_power_plant_total
     default_table_amount = 1
     default_inverter_table = False
     if request.method == "POST":
@@ -82,10 +83,13 @@ def comercial_estrutura():
         except:
             default_inverter_table = False
         power_plant = PowerPlant(float(power_plant_total), float(module_power))
-    
+        default_module_amount = power_plant.panels_amount
+        default_table_amount = 1
+        power_plant_real = power_plant.total_power
         structure = Estrutura(int(module_length), int(default_module_amount), int(default_table_amount), default_inverter_table)
     return render_template('comercial_estrutura.html', default_module_length=default_module_length, default_module_amount=default_module_amount, default_table_amount=default_table_amount, default_power_plant_total=default_power_plant_total,
-                           structure=structure, default_inverter_table=default_inverter_table, default_module_power=default_module_power, active='Estrutura', theme=api.theme)
+                           structure=structure, default_inverter_table=default_inverter_table, default_module_power=default_module_power, power_plant_real=power_plant_real,
+                           active='Estrutura', theme=api.theme)
 
 @app.route('/mesas/', methods=('GET', 'POST'))
 def tables():

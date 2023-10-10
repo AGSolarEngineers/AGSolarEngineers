@@ -1,9 +1,9 @@
 class PowerPlant():
     def __init__(self, total_power: float, module_power: float):
-        self._total_power = total_power
-        self._module_power = module_power
-        self._panels_amount = 3*round((total_power/module_power)/3)
-        self.total_power = self.panels_amount*self.module_power
+        self._total_power = round(total_power, 3)
+        self._module_power = round(module_power/1000, 3)
+        self._panels_amount = round(3*round((self._total_power/self._module_power)/3), 3)
+        self.total_power = round(self.panels_amount*self.module_power, 3)
     
     # region getters & setters
 
@@ -21,15 +21,15 @@ class PowerPlant():
 
     @panels_amount.setter
     def panels_amount(self, value):
-       self._panels_amount = value
+       self._panels_amount = round(value, 3)
     
     @total_power.setter
     def total_power(self, value):
-        self._total_power = value
+        self._total_power = round(value, 3)
 
     @module_power.setter
     def module_power(self, value):
-        self._module_power = value
+        self._module_power = round(value, 3)
 
     @panels_amount.deleter
     def panels_amount(self):

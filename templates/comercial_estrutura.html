@@ -42,7 +42,7 @@
                     <div class="mb-3">
                         <label for="txt_module_power" class="form-label">Potencia do Módulo</label>
                         <input type="number" step=".01" class="form-control" name="txt_module_power" id="txt_module_power" value="{{default_module_power}}">
-                        <div id="lbl_module_power" class="form-text">Insira a Potencia do Módulo.</div>
+                        <div id="lbl_module_power" class="form-text">Insira a Potencia do Módulo em W.</div>
                     </div>
                 </div>
             </div>
@@ -72,14 +72,21 @@
                     <div class="mb-3">
                         <label for="txt_module_amount" class="form-label">Quantidade de Módulos</label>
                         <input type="number" class="form-control" name="txt_module_amount" id="txt_module_amount" value="{{default_module_amount}}" disabled>
-                        <div id="lbl_module_amount" class="form-text">Insira a Quantidade de Módulos.</div>
+                        <div id="lbl_module_amount" class="form-text">Quantidade de Módulos Calculados.</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="mb-3">
                         <label for="txt_table_amount" class="form-label">Quantidade de Mesas</label>
                         <input type="number" class="form-control" name="txt_table_amount" id="txt_table_amount" value="{{default_table_amount}}" disabled>
-                        <div id="lbl_table_amount" class="form-text">Insira a Quantidade de Mesas.</div>
+                        <div id="lbl_table_amount" class="form-text">Quantidade de Mesas Calculadas.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_power_plant_real" class="form-label">Potência Total</label>
+                        <input type="number" class="form-control" name="txt_power_plant_real" id="txt_power_plant_real" value="{{power_plant_real}}" disabled>
+                        <div id="lbl_power_plant_real" class="form-text">Potência Total com arranjo fechado em kWp.</div>
                     </div>
                 </div>
             </div>

@@ -31,34 +31,34 @@ class Estrutura():
 
         self.qtd_ctv = round(self.qtd_eixo/3)
 
-        self.i5603112 = self.qtd_eixo*self.qtd_mesas
-        self.i5603113 = self.i5603112
-        self.i5601003 = (self.i5603112+self.i5603113)*4
-        self.i5601002 = (self.i5603112+self.i5603113)*5
-        self.i5601001 = (self.i5603112+self.i5603113)*6
-        self.i5601101 = (self.i5603112+self.i5603113)/2.5
-        self.i5603111 = self.i5603112*4
-        self.i5603115 = self.i5603112
-        self.i5603001 = self.qtd_ctv*self.qtd_mesas*2
-        self.i5603002 = self.i5603001
-        self.i5603110 = self.i5603115*6
-        self.i5603011 = self.qtd_barra
-        self.i1000207 = math.ceil((self.i5603112+self.i5603113)/5)*5
-        self.i1030002 = self.i1000207*2
-        self.i1020004 = self.i1000207
-        self.i1000209 = math.ceil((((self.i5603111*2)+self.i5603110+(self.i5603001*8))*1.03)/5)*5
-        self.i1030006 = self.i1000209*2 if self.inv_mesa else (self.i1000209*2)+12*self.i1810101
-        self.i1020007 = self.i1000209
-        self.i1000102 = self.i5603112*8
-        self.i5601303 = math.ceil((self.i1000102/60))
-        self.i5603009 = (self.qtd_mod/3+1)*6*self.qtd_mesas
-        self.i1000304 = math.ceil((((self.i5603110*2)+(self.i5603009*2))*1.05)/5)*5
-        self.i1000212 = math.ceil((self.i5603009*2)/5)*5
-        self.i1020009 = self.i1000212
-        self.i5605015 = self.qtd_mesas*12
-        self.i7010006 = math.ceil((self.i5603009*0.1)/30)*30
-        self.i5603010 = math.ceil(self.qtd_barra/80)
-        self.i5601201 = self.i5603112*0.8
+        self.i5603112 = round(self.qtd_eixo*self.qtd_mesas, 2)
+        self.i5603113 = round(self.i5603112, 2)
+        self.i5601003 = round((self.i5603112+self.i5603113)*4, 2)
+        self.i5601002 = round((self.i5603112+self.i5603113)*5, 2)
+        self.i5601001 = round((self.i5603112+self.i5603113)*6, 2)
+        self.i5601101 = round((self.i5603112+self.i5603113)/2.5, 2)
+        self.i5603111 = round(self.i5603112*4, 2)
+        self.i5603115 = round(self.i5603112, 2)
+        self.i5603001 = round(self.qtd_ctv*self.qtd_mesas*2, 2)
+        self.i5603002 = round(self.i5603001, 2)
+        self.i5603110 = round(self.i5603115*6, 2)
+        self.i5603011 = round(self.qtd_barra, 2)
+        self.i1000207 = round(math.ceil((self.i5603112+self.i5603113)/5)*5, 2)
+        self.i1030002 = round(self.i1000207*2, 2)
+        self.i1020004 = round(self.i1000207, 2)
+        self.i1000209 = round(math.ceil((((self.i5603111*2)+self.i5603110+(self.i5603001*8))*1.03)/5)*5, 2)
+        self.i1030006 = round(self.i1000209*2 if self.inv_mesa else (self.i1000209*2)+12*self.i1810101, 2)
+        self.i1020007 = round(self.i1000209, 2)
+        self.i1000102 = round(self.i5603112*8, 2)
+        self.i5601303 = round(math.ceil((self.i1000102/60)), 2)
+        self.i5603009 = round((self.qtd_mod/3+1)*6*self.qtd_mesas, 2)
+        self.i1000304 = round(math.ceil((((self.i5603110*2)+(self.i5603009*2))*1.05)/5)*5, 2)
+        self.i1000212 = round(math.ceil((self.i5603009*2)/5)*5, 2)
+        self.i1020009 = round(self.i1000212, 2)
+        self.i5605015 = round(self.qtd_mesas*12, 2)
+        self.i7010006 = round(math.ceil((self.i5603009*0.1)/30)*30, 2)
+        self.i5603010 = round(math.ceil(self.qtd_barra/80), 2)
+        self.i5601201 = round(self.i5603112*0.8, 2)
 
     def get_bill(self):
         return {
