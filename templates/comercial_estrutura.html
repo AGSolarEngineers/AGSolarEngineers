@@ -1,0 +1,110 @@
+<title>Bill of Structure</title>
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="width: 80rem;">
+  <h3 class="card-header">Inputs</h3>
+  <div class="card-body">
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="txt_customers_name" class="form-label">Nome do Cliente</label>
+                    <input type="text" class="form-control" name="txt_customers_name" id="txt_customers_name">
+                    <div id="lbl_customers_name" class="form-text">Insira o Nome do Cliente.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_power_plant_total" class="form-label">Potência Total</label>
+                        <input type="number" step=".01" class="form-control" name="txt_power_plant_total" id="txt_power_plant_total" value="{{default_power_plant_total}}">
+                        <div id="lbl_power_plant_total" class="form-text">Insira a Potência Total da Usina em kWp.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_module_model" class="form-label">Modelo do Módulo</label>
+                        <input type="text" class="form-control" name="txt_module_model" id="txt_module_model" value="Em desenvolvimento" disabled>
+                        <div id="lbl_module_model" class="form-text">Selecione o modelo do módulo fotovoltaico.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_module_length" class="form-label">Largura do Módulo</label>
+                        <input type="number" step=".01" class="form-control" name="txt_module_length" id="txt_module_length" value="{{default_module_length}}">
+                        <div id="lbl_module_length" class="form-text">Insira a Largura do Módulo.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_module_power" class="form-label">Potencia do Módulo</label>
+                        <input type="number" step=".01" class="form-control" name="txt_module_power" id="txt_module_power" value="{{default_module_power}}">
+                        <div id="lbl_module_power" class="form-text">Insira a Potencia do Módulo.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 form-check">
+                    {% if default_inverter_table %}
+                        <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter" value="{{default_inverter_table}}" checked>
+                    {% else %}
+                        <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter" value="{{default_inverter_table}}">
+                    {% endif %}
+                    <label class="form-check-label" for="chk_inverter">Inversor instalado na Mesa</label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Calcular</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+<div class="card" style="width: 80rem;">
+    <h3 class="card-header">Outputs</h3>
+    <div class="card-body">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_module_amount" class="form-label">Quantidade de Módulos</label>
+                        <input type="number" class="form-control" name="txt_module_amount" id="txt_module_amount" value="{{default_module_amount}}" disabled>
+                        <div id="lbl_module_amount" class="form-text">Insira a Quantidade de Módulos.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="txt_table_amount" class="form-label">Quantidade de Mesas</label>
+                        <input type="number" class="form-control" name="txt_table_amount" id="txt_table_amount" value="{{default_table_amount}}" disabled>
+                        <div id="lbl_table_amount" class="form-text">Insira a Quantidade de Mesas.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in structure.get_bill()['BOM'] %}
+                    <tr>
+                        <td>{{structure.get_bill()['BOM'][row]['codigo']}}</td>
+                        <td>{{structure.get_bill()['BOM'][row]['descricao']}}</td>
+                        <td>{{structure.get_bill()['BOM'][row]['quantidade']}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

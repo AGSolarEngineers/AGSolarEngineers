@@ -22,7 +22,11 @@
           <div id="lbl_table_amount" class="form-text">Insira a Quantidade de Mesas.</div>
       </div>
       <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter">
+        {% if default_inverter_table %}
+          <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter" value="{{default_inverter_table}}" checked>
+        {% else %}
+          <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter" value="{{default_inverter_table}}">
+        {% endif %}
           <label class="form-check-label" for="chk_inverter">Inversor instalado na Mesa</label>
       </div>
       <button type="submit" class="btn btn-primary">Calcular</button>
@@ -30,6 +34,7 @@
   </div>
 </div>
 <div class="card" style="width: 80rem;">
+  <h3 class="card-header">Outputs</h3>
   <div class="card-body">
     <table class="table">
       <thead>
