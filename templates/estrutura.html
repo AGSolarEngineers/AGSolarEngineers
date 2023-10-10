@@ -40,11 +40,11 @@
         </tr>
       </thead>
       <tbody>
-        {% for row in structure.get_codes() %}
+        {% for row in structure.get_bill()['BOM'] %}
           <tr>
-            <td>{{row}}</td>
-            <td>{{structure.get_bill()[row][0]}}</td>
-            <td>{{structure.get_bill()[row][1]}}</td>
+            <td>{{structure.get_bill()['BOM'][row]['codigo']}}</td>
+            <td>{{structure.get_bill()['BOM'][row]['descricao']}}</td>
+            <td>{{structure.get_bill()['BOM'][row]['quantidade']}}</td>
           </tr>
         {% endfor %}
       </tbody>
