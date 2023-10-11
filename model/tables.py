@@ -6,7 +6,7 @@ class Mesa():
         self.tam_mod = tam_mod; 'largura do módulo em [mm]'
         self.qtd_mod = qtd_mod; 'Quantidade de módulos na usina'
         self.pot_mod = pot_mod; 'Potência dos módulos da usina'
-        self.pot_usi = qtd_mod*pot_mod/1000; 'Potência Total da usina'
+        self.pot_usi = qtd_mod*pot_mod; 'Potência Total da usina'
         self.margem_fileiras = 5; 'margem de quantidade de fileiras para cálculo posterior'
         # Se a potência da usina for inferior à 40 kWp, limitação para uma mesa
         if self.pot_usi > 40:
@@ -19,7 +19,7 @@ class Mesa():
                 self.qtd_fileiras_mesa = 25.258*np.log(self.pot_usi)-84.863
             # Array do limite menor e maior para o cálculo da mesa
             self.lim_fileiras = [round(self.qtd_fileiras_mesa)-self.margem_fileiras, round(self.qtd_fileiras_mesa)+self.margem_fileiras]
-            print('lim_fileiras: ', self.lim_fileiras)
+            # print('lim_fileiras: ', self.lim_fileiras)
             self.qtd_mesas = [(self.qtd_mod/3)/obj for obj in self.lim_fileiras]
             self.qnt_mesas_final = self.found_best_array(self.qtd_mesas) if self.pot_usi>=100 else 2
         else:
@@ -32,6 +32,17 @@ class Mesa():
         self.fileiras_mesa = np.full(self.qnt_mesas_final, math.floor(self.fileiras_real_final)) # type: ignore
         # Acréscimo de 1 fileira para cada resto que obteve
         for i in range(int(self.resto_fileiras)): self.fileiras_mesa[i] = self.fileiras_mesa[i]+1
+
+        self.fileiras_mesa = [x * 3 for x in self.fileiras_mesa]
+
+        frequencia = {}
+        for num in self.fileiras_mesa:
+            if num in frequencia:
+                frequencia[num] += 1
+            else:
+                frequencia[num] = 1
+        
+        self.mesas = [[frequencia[num], num] for num in set(self.fileiras_mesa)]
 
     def found_best_array(self, _qtd_mesa):
         """Calcula a melhor disposição das mesas"""
@@ -48,9 +59,9 @@ class Mesa():
         return self.minimum_value
 
     def get_infos(self):
-        print('Potência da usina: ', self.pot_usi)
-        print('Quantidade de mesas: ', self.qnt_mesas_final)
-        print('Quantidade de fileiras de módulos por mesa: ', self.fileiras_mesa)
+        # print('Potência da usina: ', self.pot_usi)
+        # print('Quantidade de mesas: ', self.qnt_mesas_final)
+        # print('Quantidade de fileiras de módulos por mesa: ', self.fileiras_mesa)
         return self.fileiras_mesa
 
 

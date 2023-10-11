@@ -1,0 +1,204 @@
+<title>Bill of Structure</title>
+
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">
+  <div class="card" style="width: 80rem;">
+    <h3 class="card-header">Inputs</h3>
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="mb-3">
+            <label for="txt_customers_name" class="form-label">Nome do Cliente</label>
+            <input type="text" class="form-control" name="txt_customers_name" id="txt_customers_name" value="{{default_customers_name}}">
+            <div id="lbl_customers_name" class="form-text">Insira o Nome do Cliente.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <label for="txt_module_length" class="form-label">Comprimento do Módulo</label>
+              <input type="number" step=".01" class="form-control" name="txt_module_length" id="txt_module_length" value="{{default_module_length}}">
+              <div id="lbl_module_length" class="form-text">Insira o comprimento do Módulo.</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label for="txt_power_plant_total" class="form-label">Potência Total</label>
+              <input type="number" step=".01" class="form-control" name="txt_power_plant_total" id="txt_power_plant_total" value="{{default_power_plant_total}}">
+              <div id="lbl_power_plant_total" class="form-text">Insira a Potência Total da Usina em kWp.</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label for="txt_module_power" class="form-label">Potência do Módulo</label>
+              <input type="number" class="form-control" name="txt_module_power" id="txt_module_power" value="{{default_module_power}}">
+              <div id="lbl_module_power" class="form-text">Insira a Potência do Módulo.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 form-check">
+            {% if default_inverter_table %}
+              <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter" value="{{default_inverter_table}}" checked>
+            {% else %}
+              <input type="checkbox" class="form-check-input" name="chk_inverter" id="chk_inverter" value="{{default_inverter_table}}">
+            {% endif %}
+              <label class="form-check-label" for="chk_inverter">Inversor instalado na Mesa</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="width: 80rem;">
+    <h3 class="card-header">Concreto</h3>
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="txt_height_buried" class="form-label">Altura da Base Enterrada</label>
+                    <input type="number" step="0.01" class="form-control" name="txt_height_buried" id="txt_height_buried" value="{{default_height_buried}}">
+                    <div id="lbl_height_buried" class="form-text">Insira a Altura da Base Enterrada.</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="txt_ray_buried" class="form-label">Raio da Base Enterrada</label>
+                    <input type="number" step="0.01" class="form-control" name="txt_ray_buried" id="txt_ray_buried" value="{{default_ray_buried}}">
+                    <div id="lbl_ray_buried" class="form-text">Insira o Raio da Base Enterrada.</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="txt_volume_buried" class="form-label">Calculo m³</label>
+                    <input type="number" step="0.01" class="form-control" name="txt_volume_buried" id="txt_volume_buried" value="{{default_volume_buried}}" placeholder="0.00" disabled>
+                    <div id="lbl_volume_buried" class="form-text">Resultado Calculo m³.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="txt_height_exposed" class="form-label">Altura da Base Exposta</label>
+                    <input type="number" step="0.01" class="form-control" name="txt_height_exposed" id="txt_height_exposed" value="{{default_height_exposed}}">
+                    <div id="lbl_height_exposed" class="form-text">Insira a Altura da Base Exposta.</div>
+                </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label for="txt_ray_exposed" class="form-label">Raio da Base Exposta</label>
+                <input type="number" step="0.01" class="form-control" name="txt_ray_exposed" id="txt_ray_exposed" value="{{default_ray_exposed}}">
+                <div id="lbl_ray_exposed" class="form-text">Insira o Raio da Base Exposta.</div>
+            </div>
+            </div>
+            <div class="col">
+            <div class="mb-3">
+                <label for="txt_volume_exposed" class="form-label">Calculo m³</label>
+                <input type="number" step="0.01" class="form-control" name="txt_volume_exposed" id="txt_volume_exposed" value="{{default_volume_exposed}}" placeholder="0.00" disabled>
+                <div id="lbl_volume_exposed" class="form-text">Resultado Calculo m³.</div>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="card" style="width: 80rem;">
+  <h3 class="card-header">Outputs</h3>
+  <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+              <label for="txt_module_amount" class="form-label">Quantidade de Módulos</label>
+              <input type="number" class="form-control" name="txt_module_amount" id="txt_module_amount" value="{{default_module_amount}}" disabled>
+              <div id="lbl_module_amount" class="form-text">Quantidade de Módulos Calculados.</div>
+          </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="txt_power_plant_real" class="form-label">Potência Total</label>
+                <input type="number" class="form-control" name="txt_power_plant_real" id="txt_power_plant_real" value="{{power_plant_real}}" disabled>
+                <div id="lbl_power_plant_real" class="form-text">Potência Total com arranjo fechado em kWp.</div>
+            </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="txt_base_amount" class="form-label">Quantidade de Bases:</label>
+            <input type="number" class="form-control" name="txt_base_amount" id="txt_base_amount" value="{{default_base_amount}}" disabled>
+            <div id="lbl_base_amount" class="form-text">Quantidade de Bases Total das mesas.</div>
+          </div>
+        </div>
+      </div>
+      {% if structure is not none %}
+        <div class="row">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Descrição</th>
+                <th scope="col">Volume total [m³]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Volume de Concreto Total Necessário</td>
+                <td>{{default_volume_total}} m³</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Quantidade de Módulos</th>
+                <th scope="col">Quantidade de Mesas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in default_table_amount %}
+              <tr>
+                <td>5600001</td>
+                <td>MESA DE {{i[1]}} MÓDULOS</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[0]}}</td>
+              </tr>  
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Descrição</th>
+                {% for i in BOM %}
+                  <th scope="col">Quantidade</th>
+                {% endfor %}
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in BOM[0].get_bill()['BOM'] %}
+                <tr>
+                  <td>{{BOM[0].get_bill()['BOM'][row]['codigo']}}</td>
+                  <td>{{BOM[0].get_bill()['BOM'][row]['descricao']}}</td>
+                  {% for i in BOM %}
+                    <td>{{i.get_bill()['BOM'][row]['quantidade']}}</td>
+                  {% endfor %}
+                  <td>{{BOM_total['BOM'][row]['quantidade']}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}
