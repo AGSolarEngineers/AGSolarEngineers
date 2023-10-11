@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="{{theme}}">
+<html lang="en" data-bs-theme="{{session.get('theme')}}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,6 +42,9 @@
               <a class="nav-link disabled" aria-disabled="true">Memorial de Calculos</a>
             </li>
           </ul>
+          <form class="d-flex">
+            <a class="nav-link active" aria-current="page" href="{{url_for('toggle_theme')}}">Tema</a>
+          </form>
         </div>
       </div>
     </nav>

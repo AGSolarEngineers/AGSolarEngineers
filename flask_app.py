@@ -1,13 +1,12 @@
 import math
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, session
 from git.repo import Repo
 from flask_sqlalchemy import SQLAlchemy
-from api import api
 from controller.power_plant import PowerPlant
 from model.estrutura import Estrutura
 from model.tables import Mesa
 app = Flask(__name__)
-
+app.secret_key = 'agsolar2023engenheiros'
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="AGSolarEngineers",
     password="AGSolar2023DB",
@@ -30,16 +29,24 @@ def git_update():
 
 @app.route('/')
 def index():
-    print(api.theme)
-    return render_template('index.html', theme=api.theme)
+    session['url'] = url_for('index')
+    return render_template('index.html')
 
 @app.route('/toggle-theme')
 def toggle_theme():
-    api.theme = 'light' if api.theme != 'light' else 'dark'
+    current_theme = session.get("theme")
+    if current_theme == "dark":
+        session["theme"] = "light"
+    else:
+        session["theme"] = "dark"
+    print(session['theme'])
+    if 'url' in session:
+        return redirect(session['url'])
     return redirect(url_for('index'))
 
 @app.route('/estrutura-kwp', methods=('GET', 'POST'))
 def estrutura_kwp():
+    session['url'] = url_for('estrutura_kwp')
     default_module_length = 1134
     default_power_plant_total = 103.68
     default_module_power = 540
@@ -106,7 +113,7 @@ def estrutura_kwp():
     default_volume_total = math.ceil(default_base_amount*default_volume_per_base*1.1)
     default_feature = "H21"
 
-    return render_template('estrutura_kwp.html', theme=api.theme, default_customers_name=default_customers_name, default_inverter_table = default_inverter_table,
+    return render_template('estrutura_kwp.html', default_customers_name=default_customers_name, default_inverter_table = default_inverter_table,
                            default_module_length=default_module_length, default_power_plant_total=default_power_plant_total, default_module_power=default_module_power, 
                            default_module_amount=default_module_amount, default_table_amount=default_table_amount, power_plant_real=power_plant_real, structure=structure, BOM=BOM, BOM_total=BOM_total,
                            default_base_amount=default_base_amount, default_height_buried=default_height_buried, default_ray_buried=default_ray_buried, default_volume_buried=default_volume_buried, 
@@ -115,6 +122,7 @@ def estrutura_kwp():
 
 @app.route('/estrutura-un', methods=('GET', 'POST'))
 def estrutura():
+    session['url'] = url_for('estrutura')
     structure = Estrutura(0, 0, 0, False)
     default_module_length=1134
     default_module_amount = 300
@@ -133,10 +141,11 @@ def estrutura():
         except:
             default_inverter_table = False
         structure = Estrutura(int(module_length), int(module_amount), int(table_amount), default_inverter_table)
-    return render_template('estrutura_un.html', default_module_length=default_module_length, default_module_amount=default_module_amount, default_table_amount=default_table_amount, default_inverter_table=default_inverter_table, structure=structure, active='Estrutura', theme=api.theme)
+    return render_template('estrutura_un.html', default_module_length=default_module_length, default_module_amount=default_module_amount, default_table_amount=default_table_amount, default_inverter_table=default_inverter_table, structure=structure, active='Estrutura')
 
 @app.route('/comercial/estrutura', methods=('GET', 'POST'))
 def comercial_estrutura():
+    session['url'] = url_for('comercial_estrutura')
     structure = Estrutura(0, 0, 0, False)
     default_module_length = 1055
     default_module_amount = 300
@@ -164,10 +173,11 @@ def comercial_estrutura():
         structure = Estrutura(int(module_length), int(default_module_amount), int(default_table_amount), default_inverter_table)
     return render_template('comercial_estrutura.html', default_module_length=default_module_length, default_module_amount=default_module_amount, default_table_amount=default_table_amount, default_power_plant_total=default_power_plant_total,
                            structure=structure, default_inverter_table=default_inverter_table, default_module_power=default_module_power, power_plant_real=power_plant_real,
-                           active='Estrutura', theme=api.theme)
+                           active='Estrutura')
 
 @app.route('/mesas/', methods=('GET', 'POST'))
 def tables():
+    session['url'] = url_for('tables')
     obj = Mesa(0, 0, 0)
     default_module_length = 1134
     default_module_amount = 300
@@ -180,10 +190,11 @@ def tables():
         module_power = request.form['txt_module_power']
         default_module_power = module_power
         obj = Mesa(int(module_length), int(module_amount), int(module_power))
-    return render_template('mesas.html', default_module_length=default_module_length, default_module_amount=default_module_amount, default_module_power=default_module_power, tables=obj, active='Estrutura', theme=api.theme)
+    return render_template('mesas.html', default_module_length=default_module_length, default_module_amount=default_module_amount, default_module_power=default_module_power, tables=obj, active='Estrutura')
 
 @app.route('/concreto', methods=('GET', 'POST'))
 def concreto():
+    session['url'] = url_for('concreto')
     default_base_amount = 0
     default_height_buried = 1.6
     default_ray_buried = 0.15
@@ -211,7 +222,7 @@ def concreto():
     return render_template("concreto.html", active='Estrutura', default_base_amount=default_base_amount,
                             default_height_buried=default_height_buried, default_ray_buried=default_ray_buried, default_volume_buried=default_volume_buried, 
                             default_height_exposed=default_height_exposed, default_ray_exposed=default_ray_exposed, default_volume_exposed=default_volume_exposed, 
-                            default_volume_per_base=default_volume_per_base, default_volume_total=default_volume_total, default_feature=default_feature, theme=api.theme)
+                            default_volume_per_base=default_volume_per_base, default_volume_total=default_volume_total, default_feature=default_feature)
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=8000, debug=True)
