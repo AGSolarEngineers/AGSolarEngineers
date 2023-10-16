@@ -41,13 +41,11 @@ def git_update():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     session['url'] = url_for('index')
-    if request.method == 'GET':
-        return render_template('index.html', comments=Comment.query.all())
     if request.method == 'POST':
         comment = Comment(content=request.form['contents']) # type: ignore
         db.session.add(comment)
         db.session.commit()
-    return redirect(url_for('index'))
+    return render_template('index.html', comments=Comment.query.all())
 
 @app.route('/toggle-theme')
 def toggle_theme():
