@@ -21,7 +21,7 @@ db = SQLAlchemy(app)
 
 # region database
 
-class Comments(db.Model):
+class Comment(db.Model):
     __tablename__ = "comments"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -41,7 +41,7 @@ def git_update():
 @app.route('/')
 def index():
     session['url'] = url_for('index')
-    return render_template('index.html')
+    return render_template('index.html', comments=Comment.query.all())
 
 @app.route('/toggle-theme')
 def toggle_theme():

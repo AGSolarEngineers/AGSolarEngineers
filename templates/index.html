@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Hello World</h1>
+    <form action="post">
+      <div class="card" style="width: 80 rem">
+        <div class="card-header">Comentários</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text">With textarea</span>
+              <textarea class="form-control" aria-label="With textarea"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
 {% endblock %}
