@@ -43,7 +43,7 @@ def index():
     session['url'] = url_for('index')
     if request.method == 'GET':
         return render_template('index.html', comments=Comment.query.all())
-    comment = Comment(content=request.form['contents']) # type: ignore
+    comment = Comment(content=request.form['txt_comments']) # type: ignore
     db.session.add(comment)
     db.session.commit()
     return redirect(url_for('index'))
