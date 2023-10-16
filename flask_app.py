@@ -7,6 +7,7 @@ from model.estrutura import Estrutura
 from model.tables import Mesa
 app = Flask(__name__)
 app.secret_key = 'agsolar2023engenheiros'
+
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="AGSolarEngineers",
     password="AGSolar2023DB",
@@ -17,6 +18,16 @@ app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+# region database
+
+class Comments(db.Model):
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(4096))
+
+# endregion
 
 @app.route('/git_update', methods=['POST'])
 def git_update():
@@ -225,4 +236,4 @@ def concreto():
                             default_volume_per_base=default_volume_per_base, default_volume_total=default_volume_total, default_feature=default_feature)
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
