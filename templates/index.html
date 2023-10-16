@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="POST">
-      <div class="card" style="width: 80 rem">
-        <div class="card-header">Comentários</div>
-        <div class="card-body">
-          <div class="mb-3">
-            <div class="input-group">
-              <span class="input-group-text">Deixe Aqui Comentários</span>
-              <textarea class="form-control" aria-label="With textarea" name="txt_comments" id="txt_comments"></textarea>
+  <form method="POST">
+    <div class="card" style="width: 80 rem">
+      <div class="card-header">Comentários</div>
+      <div class="card-body">
+        <div class="input-group">
+          <span class="input-group-text">Deixe Aqui Comentários</span>
+          <textarea class="form-control" aria-label="With textarea" name="txt_comments" id="txt_comments"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      <div class="card-body">
+        <div class="container">
+          {% for comment in comments %}
+            <div class="row">
+              {{comment.content}}
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          {% endfor %}
         </div>
       </div>
-    </form>
+    </div>
+  </form>
 {% endblock %}
