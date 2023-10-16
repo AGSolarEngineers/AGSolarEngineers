@@ -38,10 +38,15 @@ def git_update():
     origin.pull()
     return '', 200
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     session['url'] = url_for('index')
-    return render_template('index.html', comments=Comment.query.all())
+    if request.method == 'GET':
+        return render_template('index.html', comments=Comment.query.all())
+    comment = Comment(content=request.form['contents']) # type: ignore
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('index'))
 
 @app.route('/toggle-theme')
 def toggle_theme():
