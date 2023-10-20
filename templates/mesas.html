@@ -8,17 +8,17 @@
     <form method="post">
       <div class="mb-3">
           <label for="txt_module_length" class="form-label">Module Length</label>
-          <input type="number" step=".01" class="form-control" name="txt_module_length" id="txt_module_length" value="{{default_module_length}}">
+          <input type="number" step=".01" class="form-control" name="txt_module_length" id="txt_module_length" value="{{mesa.module.length}}">
           <div id="lbl_module_length" class="form-text">Insert the module length.</div>
       </div>
       <div class="mb-3">
           <label for="txt_module_amount" class="form-label">Module Amount</label>
-          <input type="number" class="form-control" name="txt_module_amount" id="txt_module_amount" value="{{default_module_amount}}">
+          <input type="number" class="form-control" name="txt_module_amount" id="txt_module_amount" value="{{mesa.module_amount}}">
           <div id="lbl_module_amount" class="form-text">Insert the module amount.</div>
       </div>
       <div class="mb-3">
           <label for="txt_module_power" class="form-label">Module Power</label>
-          <input type="number" class="form-control" name="txt_module_power" id="txt_module_power" value="{{default_module_power}}">
+          <input type="number" class="form-control" name="txt_module_power" id="txt_module_power" value="{{mesa.module.power}}">
           <div id="lbl_module_power" class="form-text">Insert the Module Power.</div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -28,7 +28,24 @@
 <div class="card" style="width: 80rem;">
   <h3 class="card-header">Outputs</h3>
   <div class="card-body">
-    <p>Mesas: {{tables.get_infos()}}</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Descrição</th>
+          <th scope="col">Quantidade</th>
+          <th scope="col">Unidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in mesa.tables_amount %}
+            <tr>
+              <td>MESA DE {{i[1]}} MÓDULOS</td>
+              <td>{{i[0]}}</td>
+              <td>un</td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 {% endblock %}
