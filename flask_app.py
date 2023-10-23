@@ -70,19 +70,25 @@ def estrutura_kwp():
     power_plant = PowerPlant('', '7.0000', 'Av. dos Trabalhadores, 665, São João da Boa Vista - SP',
                              103.68, module, False)
     if request.method == "POST":
-        power_plant.customers_name = request.form['txt_customers_name']
-        power_plant.module.length = int(request.form['txt_module_length'])
-        power_plant.power = float(request.form['txt_power_plant_total'])
-        power_plant.module.power = int(request.form['txt_module_power'])
-        power_plant.concrete.height_buried = float(request.form['txt_height_buried'])
-        power_plant.concrete.ray_buried = float(request.form['txt_ray_buried'])
-        power_plant.concrete.height_exposed = float(request.form['txt_height_exposed'])
-        power_plant.concrete.ray_exposed = float(request.form['txt_ray_exposed'])
-        inverter_table = request.form.getlist('chk_inverter')
-        if inverter_table:
-            power_plant.inverter_table = True
-        power_plant.calculate_optmize()
-        power_plant.concrete.calculate_volume()
+        button_calculate = request.form.get('calculate')
+        button_export = request.form.get('export')
+        if button_calculate is not None:
+            power_plant.customers_name = request.form['txt_customers_name']
+            power_plant.module.length = int(request.form['txt_module_length'])
+            power_plant.power = float(request.form['txt_power_plant_total'])
+            power_plant.module.power = int(request.form['txt_module_power'])
+            power_plant.concrete.height_buried = float(request.form['txt_height_buried'])
+            power_plant.concrete.ray_buried = float(request.form['txt_ray_buried'])
+            power_plant.concrete.height_exposed = float(request.form['txt_height_exposed'])
+            power_plant.concrete.ray_exposed = float(request.form['txt_ray_exposed'])
+            inverter_table = request.form.getlist('chk_inverter')
+            if inverter_table:
+                power_plant.inverter_table = True
+            power_plant.calculate_optmize()
+            power_plant.concrete.calculate_volume()            
+        if button_export is not None:
+            print('oi')
+            return render_template('report.html', power_plant=power_plant)
 
     return render_template('estrutura_kwp.html', power_plant=power_plant)
 
@@ -174,6 +180,7 @@ def concreto():
         concreto.calculate_volume()
 
     return render_template("concreto.html", active='Estrutura', concreto=concreto)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000, debug=True)

@@ -101,76 +101,85 @@
             </div>
         </div>
         <div class="row">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" name="calculate" class="btn btn-primary">Submit</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="card" style="width: 80rem;">
-    <h3 class="card-header">Outputs</h3>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Descrição</th>
-            <th scope="col">Quantidade</th>
-            <th scope="col">Unidade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Potência da Usina</td>
-            <td>{{power_plant.real_power}}</td>
-            <td>kWp</td>
-          </tr>
-          <tr>
-            <td>Quantidade Total de Módulos</td>
-            <td>{{power_plant.module_amount}}</td>
-            <td>un</td>
-          </tr>
-          {% for i in power_plant.tables.tables_amount %}
+<div class="card" style="width: 80rem;">
+  <h3 class="card-header">Outputs</h3>
+  <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          <thead>
             <tr>
-              <td>MESA DE {{i[1]}} MÓDULOS</td>
-              <td>{{i[0]}}</td>
+              <th scope="col">Descrição</th>
+              <th scope="col">Quantidade</th>
+              <th scope="col">Unidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Potência da Usina</td>
+              <td>{{power_plant.real_power}}</td>
+              <td>kWp</td>
+            </tr>
+            <tr>
+              <td>Quantidade Total de Módulos</td>
+              <td>{{power_plant.module_amount}}</td>
               <td>un</td>
             </tr>
-          {% endfor %}
-          <tr>
-            <td>Volume de Concreto ({{power_plant.concrete.feature}})</td>
-            <td>{{power_plant.concrete.volume_total}}</td>
-            <td>m³</td>
-          </tr>
-          <tr>
-            <td>Quantidade total de Bases</td>
-            <td>{{power_plant.concrete.base_amount}}</td>
-            <td>un</td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Descrição</th>
             {% for i in power_plant.tables.tables_amount %}
-              <th scope="col">Quantidade</th>
-              {% endfor %}
-              <th scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in power_plant.structures[0].bom %}
+              <tr>
+                <td>MESA DE {{i[1]}} MÓDULOS</td>
+                <td>{{i[0]}}</td>
+                <td>un</td>
+              </tr>
+            {% endfor %}
             <tr>
-              <td>{{row}}</td>
-              <td>{{power_plant.structures[0].bom[row]['descricao']}}</td>
-              {% for i in power_plant.structures %}
-                <td>{{power_plant.structures[loop.index0].bom[row]['quantidade']}}</td>
-              {% endfor %}
+              <td>Volume de Concreto ({{power_plant.concrete.feature}})</td>
+              <td>{{power_plant.concrete.volume_total}}</td>
+              <td>m³</td>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+            <tr>
+              <td>Quantidade total de Bases</td>
+              <td>{{power_plant.concrete.base_amount}}</td>
+              <td>un</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Descrição</th>
+              {% for i in power_plant.tables.tables_amount %}
+                <th scope="col">Quantidade</th>
+              {% endfor %}
+                <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in power_plant.structures[0].bom %}
+              <tr>
+                <td>{{row}}</td>
+                <td>{{power_plant.structures[0].bom[row]['descricao']}}</td>
+                {% for i in power_plant.structures %}
+                  <td>{{power_plant.structures[loop.index0].bom[row]['quantidade']}}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <button type="submit" name="export" class="btn btn-primary">Exportar</button>
+      </div>
     </div>
   </div>
+</div>
 </form>
 {% endblock %}
